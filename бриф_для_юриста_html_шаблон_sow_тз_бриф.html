@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Бриф для юриста — SOW/ТЗ/бриф</title>
+  <style>
+    :root {
+      --bg: #0f172a;          /* slate-900 */
+      --panel: #111827;       /* gray-900 */
+      --muted: #94a3b8;       /* slate-400 */
+      --text: #e5e7eb;        /* gray-200 */
+      --accent: #22d3ee;      /* cyan-400 */
+      --accent-2: #60a5fa;    /* blue-400 */
+      --ok: #34d399;          /* green-400 */
+      --warn: #fbbf24;        /* amber-400 */
+      --danger: #fb7185;      /* rose-400 */
+      --border: #1f2937;      /* gray-800 */
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+      color: var(--text); font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial;
+      padding: 24px; 
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    header { display:flex; align-items: center; justify-content: space-between; margin-bottom: 20px; gap:16px; }
+    h1 { font-size: clamp(20px, 3vw, 28px); margin: 0; letter-spacing: 0.2px; }
+    .sub { color: var(--muted); font-size: 14px; }
+    .card {
+      background: rgba(17,24,39,0.8);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 18px; margin: 14px 0; backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .card h2 { margin: 0 0 12px; font-size: 18px; }
+    .grid { display: grid; gap: 12px; }
+    @media (min-width: 800px){ .grid.cols-2 { grid-template-columns: 1fr 1fr; } }
+    label { display: block; font-weight: 600; margin-bottom: 6px; }
+    .hint { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    input[type="text"], input[type="date"], input[type="time"], input[type="url"], input[type="number"], select, textarea {
+      width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: #0b1220; color: var(--text);
+      outline: none; transition: border-color .2s, box-shadow .2s; 
+    }
+    textarea { min-height: 96px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(34,211,238,0.15); }
+    .row { display:flex; gap:12px; }
+    .row > * { flex:1; }
+    .chips { display:flex; flex-wrap: wrap; gap:8px; }
+    .chip {
+      padding: 6px 10px; border:1px solid var(--border); border-radius: 999px; background:#0b1220; color:var(--text); cursor:pointer; user-select:none;
+    }
+    .chip.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(34,211,238,0.1) inset; }
+    .divider { height:1px; background: var(--border); margin: 8px 0 2px; }
+    .muted { color: var(--muted); }
+    .btns { display:flex; flex-wrap: wrap; gap:10px; }
+    button {
+      border: 1px solid var(--border); background: #0b1220; color: var(--text); padding: 10px 14px; border-radius: 12px; cursor: pointer;
+      transition: transform .05s ease, border-color .2s;
+    }
+    button:hover { border-color: var(--accent-2); }
+    button:active { transform: scale(0.99); }
+    .btn-primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; color: #001018; font-weight: 700; }
+    .tag { font-size:12px; padding: 2px 8px; border-radius: 999px; border:1px solid var(--border); color: var(--muted); }
+
+    .pill { display:flex; gap:10px; align-items:center; background:#0b1220; border:1px solid var(--border); padding:8px 10px; border-radius:12px; }
+    .pill input { width:auto; }
+
+    footer { margin-top: 16px; color: var(--muted); font-size: 12px; text-align: center; }
+
+    /* Print */
+    @media print {
+      body { background: #fff; color: #000; padding: 0; }
+      .card { box-shadow:none; background:#fff; border-color:#ddd; }
+      header .btns, .actions, .no-print { display:none !important; }
+      a::after { content: " (" attr(href) ")"; font-size: 10px; color:#444; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Бриф для юриста — SOW/ТЗ</h1>
+        <div class="sub">Заполните кратко — остальное система предложит подтвердить. Итог можно распечатать или отправить по почте.</div>
+      </div>
+      <div class="btns no-print">
+        <button class="btn-primary" id="btnGenerate">Сформировать e‑mail сводку</button>
+        <button id="btnPrint">Печать / PDF</button>
+        <button id="btnSave">Сохранить JSON</button>
+        <button id="btnLoad">Загрузить JSON</button>
+      </div>
+    </header>
+
+    <!-- 1. Основное -->
+    <section class="card">
+      <h2>1) Основное</h2>
+      <div class="grid cols-2">
+        <div>
+          <label for="title">Название задачи</label>
+          <input id="title" type="text" placeholder="Напр.: Внедрение ПО для отдела продаж" />
+        </div>
+        <div class="row">
+          <div>
+            <label for="dueDate">Дедлайн</label>
+            <input id="dueDate" type="date" />
+          </div>
+          <div>
+            <label for="dueTime">Время</label>
+            <input id="dueTime" type="time" />
+          </div>
+        </div>
+        <div class="grid-item" style="grid-column:1/-1;">
+          <label for="summary">Кратко своими словами — что хотим на выходе</label>
+          <textarea id="summary" placeholder="Опишите результат, а не процесс..."></textarea>
+          <div class="hint">Пример: «Заключиться на безопасных условиях, чтобы успеть к релизу 30.09, без передачи ПДн на тестовом этапе»</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Тип сделки и важность -->
+    <section class="card">
+      <h2>2) Тип и важность</h2>
+      <div class="grid cols-2">
+        <div>
+          <label for="dealType">Предмет/тип сделки</label>
+          <select id="dealType">
+            <option value="">— Выберите —</option>
+            <option>Поставка</option>
+            <option>Оказание услуг</option>
+            <option>Разработка ПО</option>
+            <option>Лицензия/SAAS</option>
+            <option>Совместный проект/партнёрство</option>
+            <option>Иное</option>
+          </select>
+        </div>
+        <div>
+          <label for="priority">Уровень важности</label>
+          <select id="priority">
+            <option value="">— Выберите —</option>
+            <option>На контроле у руководства</option>
+            <option>Стратегический проект</option>
+            <option>Срочно и важно (пожар)</option>
+            <option>Несрочно, но важно</option>
+            <option>Рутина/мелкая закупка</option>
+          </select>
+        </div>
+        <div>
+          <label for="counterparty">Поведение контрагента</label>
+          <select id="counterparty">
+            <option value="">— Выберите —</option>
+            <option>Готов продавиться на наши условия</option>
+            <option>Баланс интересов</option>
+            <option>Мы согласны на любые условия контрагента</option>
+          </select>
+        </div>
+        <div>
+          <label for="goal">Цели и желаемый результат (можно несколько)</label>
+          <div class="chips" id="goalChips">
+            <div class="chip" data-v="Заключиться на безопасных условиях">Заключиться на безопасных условиях</div>
+            <div class="chip" data-v="Правовая оценка">Правовая оценка</div>
+            <div class="chip" data-v="Снизить риски">Снизить риски</div>
+            <div class="chip" data-v="Урегулировать без суда">Урегулировать без суда</div>
+            <div class="chip" data-v="Взыскать/претензионная работа">Взыскать/претензионная работа</div>
+          </div>
+          <input type="hidden" id="goals" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Статус и контекст -->
+    <section class="card">
+      <h2>3) История и статус</h2>
+      <div class="grid cols-2">
+        <div>
+          <label for="origin">Как возникла задача</label>
+          <input id="origin" type="text" placeholder="Позвонил клиент / новый поставщик / тендер и т.п." />
+        </div>
+        <div>
+          <label>Началось ли уже исполнение</label>
+          <div class="row">
+            <label class="pill"><input type="radio" name="started" value="Да"/> Да</label>
+            <label class="pill"><input type="radio" name="started" value="Нет"/> Нет</label>
+          </div>
+        </div>
+        <div>
+          <label for="comms">Было ли общение с контрагентом (кратко)</label>
+          <textarea id="comms" placeholder="Договорились об условиях/скинули типовой/ждем правки..."></textarea>
+        </div>
+        <div>
+          <label for="docs">Какие документы уже есть (ссылки)</label>
+          <div class="row">
+            <input id="docUrl" type="url" placeholder="https://…" />
+            <button id="addDoc">Добавить</button>
+          </div>
+          <ul id="docs" class="muted"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Данные и конфиденциальность -->
+    <section class="card">
+      <h2>4) Данные и конфиденциальность</h2>
+      <div class="grid cols-2">
+        <div>
+          <label>Передаются ли чувствительные данные</label>
+          <div class="row">
+            <label class="pill"><input type="checkbox" id="hasPD"/> ПДн</label>
+            <label class="pill"><input type="checkbox" id="hasIP"/> Интеллектуальная собственность</label>
+            <label class="pill"><input type="checkbox" id="hasConf"/> Коммерческая тайна</label>
+          </div>
+          <div class="hint">Отметьте хотя бы одно, если да. Иначе оставьте пустым.</div>
+        </div>
+        <div>
+          <label for="dataNotes">Комментарии по данным (этапы, маскирование, доступы)</label>
+          <textarea id="dataNotes" placeholder="Тестовый контур без ПДн до релиза / доступ через VPN и т.д."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Контекст и ограничения -->
+    <section class="card">
+      <h2>5) Контекст и ограничения</h2>
+      <div class="grid cols-2">
+        <div>
+          <label class="pill"><input type="checkbox" id="isVip"/> Клиент особо важный (VIP), допускаем уступки</label>
+        </div>
+        <div>
+          <label for="budget">Бюджет/лимит (если есть)</label>
+          <input id="budget" type="text" placeholder="Напр.: до 1,5 млн ₽ / без лимита" />
+        </div>
+        <div class="grid-item" style="grid-column:1/-1;">
+          <label for="constraints">Иные нюансы (личные связи, политические риски, зависимость от партнеров)</label>
+          <textarea id="constraints"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Режим проверки -->
+    <section class="card">
+      <h2>6) Режим проверки (риск-ориентированность)</h2>
+      <div class="grid cols-2">
+        <div>
+          <div class="row">
+            <label class="pill"><input type="radio" name="mode" value="A — только существенное"/> A — только существенное</label>
+            <label class="pill"><input type="radio" name="mode" value="B — почти всё, кроме ерунды"/> B — почти всё</label>
+            <label class="pill"><input type="radio" name="mode" value="C — максимально формально"/> C — максимально формально</label>
+          </div>
+        </div>
+        <div>
+          <label for="modeWhy">Почему выбран режим</label>
+          <input id="modeWhy" type="text" placeholder="Критичность, сроки, сумма, регуляторика…" />
+        </div>
+      </div>
+      <div class="hint">Режим выбирает менеджер с учётом критичности. Его можно поменять после первичной оценки.</div>
+    </section>
+
+    <!-- 7. Фиксация договорённостей и созвон -->
+    <section class="card">
+      <h2>7) Фиксация договорённостей</h2>
+      <div class="grid cols-2">
+        <div>
+          <label for="logging">Как фиксируем договорённости</label>
+          <select id="logging">
+            <option>E-mail (корп. почта)</option>
+            <option>Трекер задач (ссылка)</option>
+            <option>Иное (указать ниже)</option>
+          </select>
+          <input id="loggingLink" type="url" placeholder="Ссылка на тикет/письмо/папку" style="margin-top:8px" />
+        </div>
+        <div>
+          <label class="pill"><input type="checkbox" id="needCall"/> Нужен короткий бриф-созвон (20 мин)</label>
+          <div class="row" style="margin-top:8px">
+            <input id="callDate" type="date" />
+            <input id="callTime" type="time" />
+          </div>
+        </div>
+        <div class="grid-item" style="grid-column:1/-1;">
+          <label for="emailTo">Кому отправлять сводку (e-mail через запятую)</label>
+          <input id="emailTo" type="text" placeholder="manager@company.com, legal@company.com" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Сводка для письма -->
+    <section class="card actions">
+      <h2>Сводка для письма</h2>
+      <textarea id="emailOut" placeholder="Нажмите «Сформировать e‑mail сводку», чтобы получить текст для отправки"></textarea>
+      <div class="hint">Скопируйте и вставьте в корпоративную почту/тикет. Проверьте ссылки и список адресатов.</div>
+    </section>
+
+    <footer>
+      Сделано для команды: бриф → SOW/ТЗ → договор. Локально: ваши данные никуда не отправляются, работают в браузере.
+    </footer>
+  </div>
+
+  <script>
+    // helpers
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+    // Chips (goals)
+    const chips = $$('#goalChips .chip');
+    const goalsInput = $('#goals');
+    chips.forEach(ch => ch.addEventListener('click', () => {
+      ch.classList.toggle('active');
+      const vals = chips.filter(c => c.classList.contains('active')).map(c => c.dataset.v);
+      goalsInput.value = vals.join(', ');
+    }));
+
+    // Docs list
+    const docsUl = $('#docs');
+    $('#addDoc').addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = $('#docUrl').value.trim();
+      if (!url) return;
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="${url}" target="_blank">${url}</a> <span class="tag">док</span>`;
+      docsUl.appendChild(li);
+      $('#docUrl').value = '';
+    });
+
+    // Generate email summary
+    function val(name){
+      const el = typeof name === 'string' ? $(name) : name;
+      return el ? (el.value || '').trim() : '';
+    }
+    function radios(name){
+      const el = document.querySelector(`input[name="${name}"]:checked`);
+      return el ? el.value : '';
+    }
+    function checks(ids){
+      return ids
+        .map(id => ({ id, el: $(id) }))
+        .filter(x => x.el && x.el.checked)
+        .map(x => x.id);
+    }
+
+    function bullet(label, content){
+      return content ? `• ${label}: ${content}\n` : '';
+    }
+
+    function buildEmail(){
+      const title = val('#title');
+      const due = [val('#dueDate'), val('#dueTime')].filter(Boolean).join(' ');
+      const summary = val('#summary');
+      const dealType = val('#dealType');
+      const priority = val('#priority');
+      const counterparty = val('#counterparty');
+      const goals = val('#goals');
+      const origin = val('#origin');
+      const started = radios('started');
+      const comms = val('#comms');
+      const docLinks = Array.from(docsUl.querySelectorAll('a')).map(a => a.href).join(', ');
+      const dataFlags = [ $('#hasPD').checked ? 'ПДн' : '', $('#hasIP').checked ? 'ИС' : '', $('#hasConf').checked ? 'Коммерческая тайна' : '' ].filter(Boolean).join(', ');
+      const dataNotes = val('#dataNotes');
+      const isVip = $('#isVip').checked ? 'Да' : 'Нет';
+      const budget = val('#budget');
+      const constraints = val('#constraints');
+      const mode = radios('mode');
+      const modeWhy = val('#modeWhy');
+      const logging = `${val('#logging')} ${val('#loggingLink')}`.trim();
+      const needCall = $('#needCall').checked;
+      const call = needCall ? [val('#callDate'), val('#callTime')].filter(Boolean).join(' ') : '';
+
+      let out = '';
+      out += title ? `Тема: ${title}\n\n` : '';
+      out += 'Бриф по задаче:\n\n';
+      out += bullet('Дедлайн', due);
+      out += bullet('Кратко', summary);
+      out += bullet('Тип сделки', dealType);
+      out += bullet('Важность', priority);
+      out += bullet('Поведение контрагента', counterparty);
+      out += bullet('Цели', goals);
+      out += bullet('Как возникла задача', origin);
+      out += bullet('Исполнение начато', started);
+      out += bullet('Коммуникации с контрагентом', comms);
+      out += bullet('Документы/ссылки', docLinks);
+      out += bullet('Данные (категории)', dataFlags);
+      out += bullet('Комментарии по данным', dataNotes);
+      out += bullet('VIP/уступки', isVip);
+      out += bullet('Бюджет/лимит', budget);
+      out += bullet('Иные нюансы', constraints);
+      out += bullet('Режим проверки', mode);
+      out += bullet('Почему выбран режим', modeWhy);
+      out += bullet('Фиксация договорённостей', logging);
+      out += needCall ? bullet('Бриф‑созвон', call) : '';
+      out += '\nПросьба подтвердить корректность брифа или отметить правки.\n';
+
+      $('#emailOut').value = out.trim();
+    }
+
+    $('#btnGenerate').addEventListener('click', buildEmail);
+    $('#btnPrint').addEventListener('click', () => window.print());
+
+    // Save / Load JSON (local)
+    function collectState(){
+      const state = {
+        title: val('#title'), dueDate: val('#dueDate'), dueTime: val('#dueTime'), summary: val('#summary'),
+        dealType: val('#dealType'), priority: val('#priority'), counterparty: val('#counterparty'), goals: val('#goals'),
+        origin: val('#origin'), started: radios('started'), comms: val('#comms'),
+        docs: Array.from($('#docs').querySelectorAll('a')).map(a => a.href),
+        hasPD: $('#hasPD').checked, hasIP: $('#hasIP').checked, hasConf: $('#hasConf').checked, dataNotes: val('#dataNotes'),
+        isVip: $('#isVip').checked, budget: val('#budget'), constraints: val('#constraints'),
+        mode: radios('mode'), modeWhy: val('#modeWhy'), logging: val('#logging'), loggingLink: val('#loggingLink'),
+        needCall: $('#needCall').checked, callDate: val('#callDate'), callTime: val('#callTime'),
+        emailTo: val('#emailTo'), emailOut: val('#emailOut')
+      };
+      return state;
+    }
+
+    function applyState(state){
+      if (!state) return;
+      const assign = (sel, v) => { const el = $(sel); if (el) el.value = v ?? ''; };
+      assign('#title', state.title);
+      assign('#dueDate', state.dueDate);
+      assign('#dueTime', state.dueTime);
+      assign('#summary', state.summary);
+      assign('#dealType', state.dealType);
+      assign('#priority', state.priority);
+      assign('#counterparty', state.counterparty);
+      assign('#goals', state.goals);
+      // chips
+      chips.forEach(c => c.classList.toggle('active', (state.goals||'').split(', ').includes(c.dataset.v)));
+
+      assign('#origin', state.origin);
+      if (state.started){
+        const r = document.querySelector(`input[name="started"][value="${state.started}"]`);
+        if (r) r.checked = true;
+      }
+      assign('#comms', state.comms);
+      // docs
+      docsUl.innerHTML = '';
+      (state.docs||[]).forEach(u => { const li = document.createElement('li'); li.innerHTML = `<a href="${u}" target="_blank">${u}</a> <span class="tag">док</span>`; docsUl.appendChild(li); });
+
+      $('#hasPD').checked = !!state.hasPD;
+      $('#hasIP').checked = !!state.hasIP;
+      $('#hasConf').checked = !!state.hasConf;
+      assign('#dataNotes', state.dataNotes);
+
+      $('#isVip').checked = !!state.isVip;
+      assign('#budget', state.budget);
+      assign('#constraints', state.constraints);
+
+      if (state.mode){
+        const r = document.querySelector(`input[name="mode"][value="${state.mode}"]`);
+        if (r) r.checked = true;
+      }
+      assign('#modeWhy', state.modeWhy);
+      assign('#logging', state.logging);
+      assign('#loggingLink', state.loggingLink);
+
+      $('#needCall').checked = !!state.needCall;
+      assign('#callDate', state.callDate);
+      assign('#callTime', state.callTime);
+
+      assign('#emailTo', state.emailTo);
+      assign('#emailOut', state.emailOut);
+    }
+
+    function download(filename, text){
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([text], {type: 'application/json'}));
+      a.download = filename; a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    $('#btnSave').addEventListener('click', () => {
+      download('brief.json', JSON.stringify(collectState(), null, 2));
+    });
+
+    $('#btnLoad').addEventListener('click', async () => {
+      const inp = document.createElement('input');
+      inp.type = 'file'; inp.accept = 'application/json';
+      inp.onchange = async () => {
+        const file = inp.files[0]; if (!file) return;
+        const text = await file.text();
+        try { applyState(JSON.parse(text)); } catch(e){ alert('Не удалось прочитать JSON'); }
+      };
+      inp.click();
+    });
+
+    // autosave localStorage
+    const STORAGE_KEY = 'brief_sow_v1';
+    function autosave(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState())); }
+    function autoload(){ try { applyState(JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')); } catch(e){} }
+    document.addEventListener('input', () => { autosave(); });
+    autoload();
+  </script>
+</body>
+</html>
