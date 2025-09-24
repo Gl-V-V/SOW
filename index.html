@@ -498,43 +498,34 @@
 
     $('#btnClearTr').addEventListener('click', () => { $('#transcript').value = ''; });
 
-    async function fillFromTranscript() {
-      const spin = $('#spin');
-      const transcript = $('#transcript').value.trim();
-      if (!transcript) { alert('Вставьте транскрипт или загрузите файл'); return; }
-      try {
-        spin.classList.add('on');
+async function fillFromTranscript() {
+  const spin = $('#spin');
+  const transcript = $('#transcript').value.trim();
+  if (!transcript) { alert('Вставьте транскрипт или загрузите файл'); return; }
+  try {
+    spin.classList.add('on');
 
-        // Отправляем POST JSON: { transcript: "..." }
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ transcript })
-        });
+    // ⬇️ POST как форма — simple request, без preflight
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body: new URLSearchParams({ transcript }).toString()
+    });
 
-        if (!res.ok) {
-          const t = await res.text().catch(()=>'');
-          throw new Error(`API ${res.status}: ${t || res.statusText}`);
-        }
+    if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
 
-        // Ответ — уже строгий brief JSON
-        const brief = await res.json();
+    const brief = await res.json();
+    applyState(brief);
+    if (!brief.emailOut) buildEmail();
+    flashCardBorders();
+  } catch (e) {
+    console.error(e);
+    alert('Не удалось заполнить из транскрипта: ' + e.message);
+  } finally {
+    spin.classList.remove('on');
+  }
+}
 
-        // Применяем к форме
-        applyState(brief);
-
-        // Если emailOut пуст — соберём черновик автоматически
-        if (!brief.emailOut) buildEmail();
-
-        // Плавная подсветка успешного автозаполнения
-        flashCardBorders();
-      } catch (e) {
-        console.error(e);
-        alert('Не удалось заполнить из транскрипта: ' + e.message);
-      } finally {
-        spin.classList.remove('on');
-      }
-    }
 
     $('#btnFill').addEventListener('click', fillFromTranscript);
 
