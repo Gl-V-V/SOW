@@ -4,54 +4,57 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Бриф для юриста — SOW/ТЗ/бриф</title>
+  <link rel="icon" href="data:,">
   <style>
     :root {
-      --bg: #0f172a; --panel: #111827; --muted: #94a3b8; --text: #e5e7eb;
-      --accent: #22d3ee; --accent-2: #60a5fa; --ok: #34d399; --warn: #fbbf24; --danger: #fb7185; --border: #1f2937;
+      --bg:#0f172a; --panel:#111827; --muted:#94a3b8; --text:#e5e7eb;
+      --accent:#22d3ee; --accent-2:#60a5fa; --ok:#34d399; --warn:#fbbf24; --danger:#fb7185; --border:#1f2937;
     }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body { margin:0; background:linear-gradient(180deg,#0b1220 0%,#0f172a 100%); color:var(--text);
-      font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; padding:24px; }
-    .container { max-width:1100px; margin:0 auto; }
-    header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; gap:16px; }
-    h1 { font-size:clamp(20px,3vw,28px); margin:0; letter-spacing:.2px; }
-    .sub { color:var(--muted); font-size:14px; }
-    .card { background:rgba(17,24,39,.8); border:1px solid var(--border); border-radius:16px; padding:18px; margin:14px 0; backdrop-filter:blur(6px); box-shadow:0 10px 30px rgba(0,0,0,.25); }
-    .card h2 { margin:0 0 12px; font-size:18px; }
-    .grid { display:grid; gap:12px; }
-    @media (min-width:800px){ .grid.cols-2 { grid-template-columns:1fr 1fr; } }
-    label { display:block; font-weight:600; margin-bottom:6px; }
-    .hint { color:var(--muted); font-size:12px; margin-top:4px; }
-    input[type="text"], input[type="date"], input[type="time"], input[type="url"], input[type="number"], select, textarea {
-      width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:#0b1220; color:var(--text);
-      outline:none; transition:border-color .2s, box-shadow .2s;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,#0b1220 0%,#0f172a 100%);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;padding:24px}
+    .container{max-width:1100px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:16px}
+    h1{font-size:clamp(20px,3vw,28px);margin:0;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:14px}
+    .card{background:rgba(17,24,39,.8);border:1px solid var(--border);border-radius:16px;padding:18px;margin:14px 0;backdrop-filter:blur(6px);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .card h2{margin:0 0 12px;font-size:18px}
+    .grid{display:grid;gap:12px}
+    @media (min-width:800px){.grid.cols-2{grid-template-columns:1fr 1fr}}
+    label{display:block;font-weight:600;margin-bottom:6px}
+    .hint{color:var(--muted);font-size:12px;margin-top:4px}
+    input[type="text"],input[type="date"],input[type="time"],input[type="url"],input[type="number"],select,textarea{
+      width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#0b1220;color:var(--text);
+      outline:none;transition:border-color .2s,box-shadow .2s
     }
-    textarea { min-height:96px; resize:vertical; }
-    input:focus, select:focus, textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(34,211,238,.15); }
-    .row { display:flex; gap:12px; }
-    .row > * { flex:1; }
-    .chips { display:flex; flex-wrap:wrap; gap:8px; }
-    .chip { padding:6px 10px; border:1px solid var(--border); border-radius:999px; background:#0b1220; color:var(--text); cursor:pointer; user-select:none; }
-    .chip.active { border-color:var(--accent); box-shadow:0 0 0 3px rgba(34,211,238,.1) inset; }
-    .muted { color:var(--muted); }
-    .btns { display:flex; flex-wrap:wrap; gap:10px; }
-    button { border:1px solid var(--border); background:#0b1220; color:var(--text); padding:10px 14px; border-radius:12px; cursor:pointer;
-      transition:transform .05s ease, border-color .2s; }
-    button:hover { border-color:var(--accent-2); }
-    button:active { transform:scale(0.99); }
-    .btn-primary { background:linear-gradient(90deg,var(--accent),var(--accent-2)); border:none; color:#001018; font-weight:700; }
-    .tag { font-size:12px; padding:2px 8px; border-radius:999px; border:1px solid var(--border); color:var(--muted); }
-    .pill { display:flex; gap:10px; align-items:center; background:#0b1220; border:1px solid var(--border); padding:8px 10px; border-radius:12px; }
-    .pill input { width:auto; }
-    footer { margin-top:16px; color:var(--muted); font-size:12px; text-align:center; }
-    .spinner { display:none; align-items:center; gap:8px; color:var(--muted); font-size:14px; }
-    .spinner.on { display:inline-flex; }
-    .spinner .dot { width:8px; height:8px; border-radius:50%; background:var(--accent); animation:b 1s infinite ease-in-out; }
-    .spinner .dot:nth-child(2){ animation-delay:.15s } .spinner .dot:nth-child(3){ animation-delay:.3s }
-    @keyframes b { 0%,80%,100%{opacity:.2; transform:scale(.8)} 40%{opacity:1; transform:scale(1)} }
-    @media print { body{background:#fff; color:#000; padding:0;} .card{box-shadow:none; background:#fff; border-color:#ddd;}
-      header .btns, .actions, .no-print, .api-box{ display:none !important;} a::after{ content:" (" attr(href) ")"; font-size:10px; color:#444; } }
+    textarea{min-height:96px;resize:vertical}
+    input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.15)}
+    .row{display:flex;gap:12px}
+    .row>*{flex:1}
+    .chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:#0b1220;color:var(--text);cursor:pointer;user-select:none}
+    .chip.active{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.1) inset}
+    .muted{color:var(--muted)}
+    .btns{display:flex;flex-wrap:wrap;gap:10px}
+    button{border:1px solid var(--border);background:#0b1220;color:var(--text);padding:10px 14px;border-radius:12px;cursor:pointer;transition:transform .05s ease,border-color .2s}
+    button:hover{border-color:var(--accent-2)}
+    button:active{transform:scale(.99)}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:#001018;font-weight:700}
+    .tag{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+    .pill{display:flex;gap:10px;align-items:center;background:#0b1220;border:1px solid var(--border);padding:8px 10px;border-radius:12px}
+    .pill input{width:auto}
+    footer{margin-top:16px;color:var(--muted);font-size:12px;text-align:center}
+    .spinner{display:none;align-items:center;gap:8px;color:var(--muted);font-size:14px}
+    .spinner.on{display:inline-flex}
+    .spinner .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:b 1s infinite ease-in-out}
+    .spinner .dot:nth-child(2){animation-delay:.15s}.spinner .dot:nth-child(3){animation-delay:.3s}
+    @keyframes b{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+    @media print{
+      body{background:#fff;color:#000;padding:0}
+      .card{box-shadow:none;background:#fff;border-color:#ddd}
+      header .btns,.actions,.no-print,.api-box{display:none!important}
+      a::after{content:" (" attr(href) ")";font-size:10px;color:#444}
+    }
   </style>
 </head>
 <body>
@@ -62,6 +65,7 @@
         <div class="sub">Заполните кратко — остальное система предложит подтвердить. Итог можно распечатать или отправить по почте.</div>
       </div>
       <div class="btns no-print">
+        <button id="btnNew" title="Очистить все поля и начать новый бриф">Новая форма</button>
         <button class="btn-primary" id="btnGenerate">Сформировать e-mail сводку</button>
         <button id="btnPrint">Печать / PDF</button>
         <button id="btnSave">Сохранить JSON</button>
@@ -85,7 +89,7 @@
             <button class="btn-primary" id="btnFill">Заполнить из транскрипта (LLM)</button>
             <button id="btnClearTr">Очистить</button>
           </div>
-          <div class="hint">Данные уйдут на ваш GAS API, вернётся структурированный JSON и заполнит поля формы.</div>
+          <div class="hint">Запрос уходит на ваш GAS API, в ответ приходит структурированный JSON, поля заполняются автоматически.</div>
         </div>
       </div>
     </section>
@@ -166,7 +170,7 @@
       </div>
     </section>
 
-    <!-- 3. Статус и контекст -->
+    <!-- 3. История и статус -->
     <section class="card">
       <h2>3) История и статус</h2>
       <div class="grid cols-2">
@@ -177,8 +181,8 @@
         <div>
           <label>Началось ли уже исполнение</label>
           <div class="row">
-            <label class="pill"><input type="radio" name="started" value="Да"/> Да</label>
-            <label class="pill"><input type="radio" name="started" value="Нет"/> Нет</label>
+            <label class="pill"><input type="radio" name="started" value="Да" /> Да</label>
+            <label class="pill"><input type="radio" name="started" value="Нет" /> Нет</label>
           </div>
         </div>
         <div>
@@ -203,9 +207,9 @@
         <div>
           <label>Передаются ли чувствительные данные</label>
           <div class="row">
-            <label class="pill"><input type="checkbox" id="hasPD"/> ПДн</label>
-            <label class="pill"><input type="checkbox" id="hasIP"/> Интеллектуальная собственность</label>
-            <label class="pill"><input type="checkbox" id="hasConf"/> Коммерческая тайна</label>
+            <label class="pill"><input type="checkbox" id="hasPD" /> ПДн</label>
+            <label class="pill"><input type="checkbox" id="hasIP" /> Интеллектуальная собственность</label>
+            <label class="pill"><input type="checkbox" id="hasConf" /> Коммерческая тайна</label>
           </div>
           <div class="hint">Отметьте хотя бы одно, если да. Иначе оставьте пустым.</div>
         </div>
@@ -220,7 +224,7 @@
     <section class="card">
       <h2>5) Контекст и ограничения</h2>
       <div class="grid cols-2">
-        <div><label class="pill"><input type="checkbox" id="isVip"/> Клиент особо важный (VIP), допускаем уступки</label></div>
+        <div><label class="pill"><input type="checkbox" id="isVip" /> Клиент особо важный (VIP), допускаем уступки</label></div>
         <div>
           <label for="budget">Бюджет/лимит (если есть)</label>
           <input id="budget" type="text" placeholder="Напр.: до 1,5 млн ₽ / без лимита" />
@@ -238,9 +242,9 @@
       <div class="grid cols-2">
         <div>
           <div class="row">
-            <label class="pill"><input type="radio" name="mode" value="A — только существенное"/> A — только существенное</label>
-            <label class="pill"><input type="radio" name="mode" value="B — почти всё, кроме ерунды"/> B — почти всё</label>
-            <label class="pill"><input type="radio" name="mode" value="C — максимально формально"/> C — максимально формально</label>
+            <label class="pill"><input type="radio" name="mode" value="A — только существенное" /> A — только существенное</label>
+            <label class="pill"><input type="radio" name="mode" value="B — почти всё, кроме ерунды" /> B — почти всё</label>
+            <label class="pill"><input type="radio" name="mode" value="C — максимально формально" /> C — максимально формально</label>
           </div>
         </div>
         <div>
@@ -251,7 +255,7 @@
       <div class="hint">Режим выбирает менеджер с учётом критичности. Его можно поменять после первичной оценки.</div>
     </section>
 
-    <!-- 7. Фиксация договорённостей и созвон -->
+    <!-- 7. Фиксация договорённостей -->
     <section class="card">
       <h2>7) Фиксация договорённостей</h2>
       <div class="grid cols-2">
@@ -265,7 +269,7 @@
           <input id="loggingLink" type="url" placeholder="Ссылка на тикет/письмо/папку" style="margin-top:8px" />
         </div>
         <div>
-          <label class="pill"><input type="checkbox" id="needCall"/> Нужен короткий бриф-созвон (20 мин)</label>
+          <label class="pill"><input type="checkbox" id="needCall" /> Нужен короткий бриф-созвон (20 мин)</label>
           <div class="row" style="margin-top:8px">
             <input id="callDate" type="date" />
             <input id="callTime" type="time" />
@@ -321,9 +325,9 @@
     // value helpers
     function val(name){ const el = typeof name === 'string' ? $(name) : name; return el ? (el.value || '').trim() : ''; }
     function radios(name){ const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; }
-
     function bullet(label, content){ return content ? `• ${label}: ${content}\n` : ''; }
 
+    // email summary
     function buildEmail(){
       const title = val('#title');
       const due = [val('#dueDate'), val('#dueTime')].filter(Boolean).join(' ');
@@ -405,7 +409,6 @@
       assign('#priority', state.priority);
       assign('#counterparty', state.counterparty);
 
-      // goals: строка или массив → активируем чипы
       const goalVals = Array.isArray(state.goals) ? state.goals : (state.goals || '').split(', ').filter(Boolean);
       chips.forEach(c => c.classList.toggle('active', goalVals.includes(c.dataset.v)));
       $('#goals').value = goalVals.join(', ');
@@ -421,7 +424,6 @@
 
       assign('#comms', state.comms);
 
-      // docs: перерисовать список
       docsUl.innerHTML = '';
       (state.docs || []).forEach(u => {
         const li = document.createElement('li');
@@ -455,7 +457,6 @@
       assign('#emailTo', state.emailTo);
       assign('#emailOut', state.emailOut);
 
-      // автосохранение после загрузки
       autosave();
     }
 
@@ -488,6 +489,38 @@
     document.addEventListener('input', () => { autosave(); });
     autoload();
 
+    // ===== Новая форма (очистка) =====
+    let SUPPRESS_AUTOSAVE = false;
+    function resetFormToDefaults(){
+      const blank = {
+        title:"", dueDate:"", dueTime:"", summary:"",
+        dealType:"", priority:"", counterparty:"", goals:"",
+        origin:"", started:"", comms:"",
+        docs:[],
+        hasPD:false, hasIP:false, hasConf:false, dataNotes:"",
+        isVip:false, budget:"", constraints:"",
+        mode:"", modeWhy:"", logging:"E-mail (корп. почта)", loggingLink:"",
+        needCall:false, callDate:"", callTime:"",
+        emailTo:"", emailOut:""
+      };
+      SUPPRESS_AUTOSAVE = true;
+      docsUl.innerHTML = '';
+      chips.forEach(c => c.classList.remove('active'));
+      $$('input[name="started"]').forEach(r => r.checked = false);
+      $$('input[name="mode"]').forEach(r => r.checked = false);
+      applyState(blank);
+      SUPPRESS_AUTOSAVE = false;
+    }
+    function newForm(){
+      if (!confirm('Очистить все поля и начать новый бриф?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      resetFormToDefaults();
+      autosave();
+    }
+    const _origAutosave = autosave;
+    autosave = function(){ if (SUPPRESS_AUTOSAVE) return; _origAutosave(); };
+    $('#btnNew')?.addEventListener('click', newForm);
+
     // === Транскрипт: чтение файла и отправка в API ===
     $('#btnFile').addEventListener('click', async () => {
       const f = $('#file').files[0];
@@ -495,38 +528,32 @@
       const txt = await f.text();
       $('#transcript').value = txt;
     });
-
     $('#btnClearTr').addEventListener('click', () => { $('#transcript').value = ''; });
 
-async function fillFromTranscript() {
-  const spin = $('#spin');
-  const transcript = $('#transcript').value.trim();
-  if (!transcript) { alert('Вставьте транскрипт или загрузите файл'); return; }
-  try {
-    spin.classList.add('on');
-
-    // ⬇️ POST как форма — simple request, без preflight
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-      body: new URLSearchParams({ transcript }).toString()
-    });
-
-    if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
-
-    const brief = await res.json();
-    applyState(brief);
-    if (!brief.emailOut) buildEmail();
-    flashCardBorders();
-  } catch (e) {
-    console.error(e);
-    alert('Не удалось заполнить из транскрипта: ' + e.message);
-  } finally {
-    spin.classList.remove('on');
-  }
-}
-
-
+    async function fillFromTranscript() {
+      const spin = $('#spin');
+      const transcript = $('#transcript').value.trim();
+      if (!transcript) { alert('Вставьте транскрипт или загрузите файл'); return; }
+      try {
+        spin.classList.add('on');
+        // simple request: без preflight (CORS safe)
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: new URLSearchParams({ transcript }).toString()
+        });
+        if (!res.ok) throw new Error(`API ${res.status}: ${await res.text().catch(()=>res.statusText)}`);
+        const brief = await res.json();
+        applyState(brief);
+        if (!brief.emailOut) buildEmail();
+        flashCardBorders();
+      } catch (e) {
+        console.error(e);
+        alert('Не удалось заполнить из транскрипта: ' + e.message);
+      } finally {
+        spin.classList.remove('on');
+      }
+    }
     $('#btnFill').addEventListener('click', fillFromTranscript);
 
     // Небольшая анимация-обратная связь
