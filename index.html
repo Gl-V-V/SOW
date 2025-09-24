@@ -6,76 +6,52 @@
   <title>Бриф для юриста — SOW/ТЗ/бриф</title>
   <style>
     :root {
-      --bg: #0f172a;          /* slate-900 */
-      --panel: #111827;       /* gray-900 */
-      --muted: #94a3b8;       /* slate-400 */
-      --text: #e5e7eb;        /* gray-200 */
-      --accent: #22d3ee;      /* cyan-400 */
-      --accent-2: #60a5fa;    /* blue-400 */
-      --ok: #34d399;          /* green-400 */
-      --warn: #fbbf24;        /* amber-400 */
-      --danger: #fb7185;      /* rose-400 */
-      --border: #1f2937;      /* gray-800 */
+      --bg: #0f172a; --panel: #111827; --muted: #94a3b8; --text: #e5e7eb;
+      --accent: #22d3ee; --accent-2: #60a5fa; --ok: #34d399; --warn: #fbbf24; --danger: #fb7185; --border: #1f2937;
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
-    body {
-      margin: 0; background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
-      color: var(--text); font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial;
-      padding: 24px; 
-    }
-    .container { max-width: 1100px; margin: 0 auto; }
-    header { display:flex; align-items: center; justify-content: space-between; margin-bottom: 20px; gap:16px; }
-    h1 { font-size: clamp(20px, 3vw, 28px); margin: 0; letter-spacing: 0.2px; }
-    .sub { color: var(--muted); font-size: 14px; }
-    .card {
-      background: rgba(17,24,39,0.8);
-      border: 1px solid var(--border);
-      border-radius: 16px; padding: 18px; margin: 14px 0; backdrop-filter: blur(6px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    }
-    .card h2 { margin: 0 0 12px; font-size: 18px; }
-    .grid { display: grid; gap: 12px; }
-    @media (min-width: 800px){ .grid.cols-2 { grid-template-columns: 1fr 1fr; } }
-    label { display: block; font-weight: 600; margin-bottom: 6px; }
-    .hint { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    body { margin:0; background:linear-gradient(180deg,#0b1220 0%,#0f172a 100%); color:var(--text);
+      font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; padding:24px; }
+    .container { max-width:1100px; margin:0 auto; }
+    header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; gap:16px; }
+    h1 { font-size:clamp(20px,3vw,28px); margin:0; letter-spacing:.2px; }
+    .sub { color:var(--muted); font-size:14px; }
+    .card { background:rgba(17,24,39,.8); border:1px solid var(--border); border-radius:16px; padding:18px; margin:14px 0; backdrop-filter:blur(6px); box-shadow:0 10px 30px rgba(0,0,0,.25); }
+    .card h2 { margin:0 0 12px; font-size:18px; }
+    .grid { display:grid; gap:12px; }
+    @media (min-width:800px){ .grid.cols-2 { grid-template-columns:1fr 1fr; } }
+    label { display:block; font-weight:600; margin-bottom:6px; }
+    .hint { color:var(--muted); font-size:12px; margin-top:4px; }
     input[type="text"], input[type="date"], input[type="time"], input[type="url"], input[type="number"], select, textarea {
-      width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: #0b1220; color: var(--text);
-      outline: none; transition: border-color .2s, box-shadow .2s; 
+      width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:#0b1220; color:var(--text);
+      outline:none; transition:border-color .2s, box-shadow .2s;
     }
-    textarea { min-height: 96px; resize: vertical; }
-    input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(34,211,238,0.15); }
+    textarea { min-height:96px; resize:vertical; }
+    input:focus, select:focus, textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(34,211,238,.15); }
     .row { display:flex; gap:12px; }
     .row > * { flex:1; }
-    .chips { display:flex; flex-wrap: wrap; gap:8px; }
-    .chip {
-      padding: 6px 10px; border:1px solid var(--border); border-radius: 999px; background:#0b1220; color:var(--text); cursor:pointer; user-select:none;
-    }
-    .chip.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(34,211,238,0.1) inset; }
-    .divider { height:1px; background: var(--border); margin: 8px 0 2px; }
-    .muted { color: var(--muted); }
-    .btns { display:flex; flex-wrap: wrap; gap:10px; }
-    button {
-      border: 1px solid var(--border); background: #0b1220; color: var(--text); padding: 10px 14px; border-radius: 12px; cursor: pointer;
-      transition: transform .05s ease, border-color .2s;
-    }
-    button:hover { border-color: var(--accent-2); }
-    button:active { transform: scale(0.99); }
-    .btn-primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; color: #001018; font-weight: 700; }
-    .tag { font-size:12px; padding: 2px 8px; border-radius: 999px; border:1px solid var(--border); color: var(--muted); }
-
+    .chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .chip { padding:6px 10px; border:1px solid var(--border); border-radius:999px; background:#0b1220; color:var(--text); cursor:pointer; user-select:none; }
+    .chip.active { border-color:var(--accent); box-shadow:0 0 0 3px rgba(34,211,238,.1) inset; }
+    .muted { color:var(--muted); }
+    .btns { display:flex; flex-wrap:wrap; gap:10px; }
+    button { border:1px solid var(--border); background:#0b1220; color:var(--text); padding:10px 14px; border-radius:12px; cursor:pointer;
+      transition:transform .05s ease, border-color .2s; }
+    button:hover { border-color:var(--accent-2); }
+    button:active { transform:scale(0.99); }
+    .btn-primary { background:linear-gradient(90deg,var(--accent),var(--accent-2)); border:none; color:#001018; font-weight:700; }
+    .tag { font-size:12px; padding:2px 8px; border-radius:999px; border:1px solid var(--border); color:var(--muted); }
     .pill { display:flex; gap:10px; align-items:center; background:#0b1220; border:1px solid var(--border); padding:8px 10px; border-radius:12px; }
     .pill input { width:auto; }
-
-    footer { margin-top: 16px; color: var(--muted); font-size: 12px; text-align: center; }
-
-    /* Print */
-    @media print {
-      body { background: #fff; color: #000; padding: 0; }
-      .card { box-shadow:none; background:#fff; border-color:#ddd; }
-      header .btns, .actions, .no-print { display:none !important; }
-      a::after { content: " (" attr(href) ")"; font-size: 10px; color:#444; }
-    }
+    footer { margin-top:16px; color:var(--muted); font-size:12px; text-align:center; }
+    .spinner { display:none; align-items:center; gap:8px; color:var(--muted); font-size:14px; }
+    .spinner.on { display:inline-flex; }
+    .spinner .dot { width:8px; height:8px; border-radius:50%; background:var(--accent); animation:b 1s infinite ease-in-out; }
+    .spinner .dot:nth-child(2){ animation-delay:.15s } .spinner .dot:nth-child(3){ animation-delay:.3s }
+    @keyframes b { 0%,80%,100%{opacity:.2; transform:scale(.8)} 40%{opacity:1; transform:scale(1)} }
+    @media print { body{background:#fff; color:#000; padding:0;} .card{box-shadow:none; background:#fff; border-color:#ddd;}
+      header .btns, .actions, .no-print, .api-box{ display:none !important;} a::after{ content:" (" attr(href) ")"; font-size:10px; color:#444; } }
   </style>
 </head>
 <body>
@@ -86,12 +62,33 @@
         <div class="sub">Заполните кратко — остальное система предложит подтвердить. Итог можно распечатать или отправить по почте.</div>
       </div>
       <div class="btns no-print">
-        <button class="btn-primary" id="btnGenerate">Сформировать e‑mail сводку</button>
+        <button class="btn-primary" id="btnGenerate">Сформировать e-mail сводку</button>
         <button id="btnPrint">Печать / PDF</button>
         <button id="btnSave">Сохранить JSON</button>
         <button id="btnLoad">Загрузить JSON</button>
       </div>
     </header>
+
+    <!-- 0. Транскрипт → LLM API -->
+    <section class="card api-box">
+      <h2>0) Транскрипт встречи → заполнить бриф</h2>
+      <div class="grid cols-2">
+        <div class="grid-item" style="grid-column:1/-1;">
+          <label for="transcript">Вставьте транскрипт (или загрузите .txt/.srt/.vtt)</label>
+          <div class="row">
+            <input id="file" type="file" accept=".txt,.srt,.vtt" />
+            <button id="btnFile">Загрузить файл</button>
+            <span class="spinner" id="spin"><span class="dot"></span><span class="dot"></span><span class="dot"></span> Обработка...</span>
+          </div>
+          <textarea id="transcript" placeholder="Вставьте сюда текст встречи..."></textarea>
+          <div class="row">
+            <button class="btn-primary" id="btnFill">Заполнить из транскрипта (LLM)</button>
+            <button id="btnClearTr">Очистить</button>
+          </div>
+          <div class="hint">Данные уйдут на ваш GAS API, вернётся структурированный JSON и заполнит поля формы.</div>
+        </div>
+      </div>
+    </section>
 
     <!-- 1. Основное -->
     <section class="card">
@@ -223,9 +220,7 @@
     <section class="card">
       <h2>5) Контекст и ограничения</h2>
       <div class="grid cols-2">
-        <div>
-          <label class="pill"><input type="checkbox" id="isVip"/> Клиент особо важный (VIP), допускаем уступки</label>
-        </div>
+        <div><label class="pill"><input type="checkbox" id="isVip"/> Клиент особо важный (VIP), допускаем уступки</label></div>
         <div>
           <label for="budget">Бюджет/лимит (если есть)</label>
           <input id="budget" type="text" placeholder="Напр.: до 1,5 млн ₽ / без лимита" />
@@ -286,7 +281,7 @@
     <!-- 8. Сводка для письма -->
     <section class="card actions">
       <h2>Сводка для письма</h2>
-      <textarea id="emailOut" placeholder="Нажмите «Сформировать e‑mail сводку», чтобы получить текст для отправки"></textarea>
+      <textarea id="emailOut" placeholder="Нажмите «Сформировать e-mail сводку», чтобы получить текст для отправки"></textarea>
       <div class="hint">Скопируйте и вставьте в корпоративную почту/тикет. Проверьте ссылки и список адресатов.</div>
     </section>
 
@@ -296,6 +291,9 @@
   </div>
 
   <script>
+    // === настройки API ===
+    const API_URL = "https://script.google.com/macros/s/AKfycbzqPuYBL0eVaF19Qob-3r1lDr_5YbSrtt2OTrXlf1KdRgdqHJLOkglLC_O0DCoKYpk/exec";
+
     // helpers
     const $ = sel => document.querySelector(sel);
     const $$ = sel => Array.from(document.querySelectorAll(sel));
@@ -305,13 +303,12 @@
     const goalsInput = $('#goals');
     chips.forEach(ch => ch.addEventListener('click', () => {
       ch.classList.toggle('active');
-      const vals = chips.filter(c => c.classList.contains('active')).map(c => c.dataset.v);
-      goalsInput.value = vals.join(', ');
+      goalsInput.value = chips.filter(c => c.classList.contains('active')).map(c => c.dataset.v).join(', ');
     }));
 
     // Docs list
     const docsUl = $('#docs');
-    $('#addDoc').addEventListener('click', (e) => {
+    $('#addDoc')?.addEventListener('click', (e) => {
       e.preventDefault();
       const url = $('#docUrl').value.trim();
       if (!url) return;
@@ -321,25 +318,11 @@
       $('#docUrl').value = '';
     });
 
-    // Generate email summary
-    function val(name){
-      const el = typeof name === 'string' ? $(name) : name;
-      return el ? (el.value || '').trim() : '';
-    }
-    function radios(name){
-      const el = document.querySelector(`input[name="${name}"]:checked`);
-      return el ? el.value : '';
-    }
-    function checks(ids){
-      return ids
-        .map(id => ({ id, el: $(id) }))
-        .filter(x => x.el && x.el.checked)
-        .map(x => x.id);
-    }
+    // value helpers
+    function val(name){ const el = typeof name === 'string' ? $(name) : name; return el ? (el.value || '').trim() : ''; }
+    function radios(name){ const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; }
 
-    function bullet(label, content){
-      return content ? `• ${label}: ${content}\n` : '';
-    }
+    function bullet(label, content){ return content ? `• ${label}: ${content}\n` : ''; }
 
     function buildEmail(){
       const title = val('#title');
@@ -385,7 +368,7 @@
       out += bullet('Режим проверки', mode);
       out += bullet('Почему выбран режим', modeWhy);
       out += bullet('Фиксация договорённостей', logging);
-      out += needCall ? bullet('Бриф‑созвон', call) : '';
+      out += needCall ? bullet('Бриф-созвон', call) : '';
       out += '\nПросьба подтвердить корректность брифа или отметить правки.\n';
 
       $('#emailOut').value = out.trim();
@@ -396,7 +379,7 @@
 
     // Save / Load JSON (local)
     function collectState(){
-      const state = {
+      return {
         title: val('#title'), dueDate: val('#dueDate'), dueTime: val('#dueTime'), summary: val('#summary'),
         dealType: val('#dealType'), priority: val('#priority'), counterparty: val('#counterparty'), goals: val('#goals'),
         origin: val('#origin'), started: radios('started'), comms: val('#comms'),
@@ -407,32 +390,44 @@
         needCall: $('#needCall').checked, callDate: val('#callDate'), callTime: val('#callTime'),
         emailTo: val('#emailTo'), emailOut: val('#emailOut')
       };
-      return state;
     }
 
     function applyState(state){
       if (!state) return;
       const assign = (sel, v) => { const el = $(sel); if (el) el.value = v ?? ''; };
+
       assign('#title', state.title);
       assign('#dueDate', state.dueDate);
       assign('#dueTime', state.dueTime);
       assign('#summary', state.summary);
+
       assign('#dealType', state.dealType);
       assign('#priority', state.priority);
       assign('#counterparty', state.counterparty);
-      assign('#goals', state.goals);
-      // chips
-      chips.forEach(c => c.classList.toggle('active', (state.goals||'').split(', ').includes(c.dataset.v)));
+
+      // goals: строка или массив → активируем чипы
+      const goalVals = Array.isArray(state.goals) ? state.goals : (state.goals || '').split(', ').filter(Boolean);
+      chips.forEach(c => c.classList.toggle('active', goalVals.includes(c.dataset.v)));
+      $('#goals').value = goalVals.join(', ');
 
       assign('#origin', state.origin);
+
       if (state.started){
         const r = document.querySelector(`input[name="started"][value="${state.started}"]`);
         if (r) r.checked = true;
+      } else {
+        $$('input[name="started"]').forEach(r => r.checked = false);
       }
+
       assign('#comms', state.comms);
-      // docs
+
+      // docs: перерисовать список
       docsUl.innerHTML = '';
-      (state.docs||[]).forEach(u => { const li = document.createElement('li'); li.innerHTML = `<a href="${u}" target="_blank">${u}</a> <span class="tag">док</span>`; docsUl.appendChild(li); });
+      (state.docs || []).forEach(u => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="${u}" target="_blank">${u}</a> <span class="tag">док</span>`;
+        docsUl.appendChild(li);
+      });
 
       $('#hasPD').checked = !!state.hasPD;
       $('#hasIP').checked = !!state.hasIP;
@@ -446,9 +441,11 @@
       if (state.mode){
         const r = document.querySelector(`input[name="mode"][value="${state.mode}"]`);
         if (r) r.checked = true;
+      } else {
+        $$('input[name="mode"]').forEach(r => r.checked = false);
       }
       assign('#modeWhy', state.modeWhy);
-      assign('#logging', state.logging);
+      assign('#logging', state.logging || 'E-mail (корп. почта)');
       assign('#loggingLink', state.loggingLink);
 
       $('#needCall').checked = !!state.needCall;
@@ -457,6 +454,9 @@
 
       assign('#emailTo', state.emailTo);
       assign('#emailOut', state.emailOut);
+
+      // автосохранение после загрузки
+      autosave();
     }
 
     function download(filename, text){
@@ -487,6 +487,64 @@
     function autoload(){ try { applyState(JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')); } catch(e){} }
     document.addEventListener('input', () => { autosave(); });
     autoload();
+
+    // === Транскрипт: чтение файла и отправка в API ===
+    $('#btnFile').addEventListener('click', async () => {
+      const f = $('#file').files[0];
+      if (!f) { alert('Выберите файл транскрипта'); return; }
+      const txt = await f.text();
+      $('#transcript').value = txt;
+    });
+
+    $('#btnClearTr').addEventListener('click', () => { $('#transcript').value = ''; });
+
+    async function fillFromTranscript() {
+      const spin = $('#spin');
+      const transcript = $('#transcript').value.trim();
+      if (!transcript) { alert('Вставьте транскрипт или загрузите файл'); return; }
+      try {
+        spin.classList.add('on');
+
+        // Отправляем POST JSON: { transcript: "..." }
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ transcript })
+        });
+
+        if (!res.ok) {
+          const t = await res.text().catch(()=>'');
+          throw new Error(`API ${res.status}: ${t || res.statusText}`);
+        }
+
+        // Ответ — уже строгий brief JSON
+        const brief = await res.json();
+
+        // Применяем к форме
+        applyState(brief);
+
+        // Если emailOut пуст — соберём черновик автоматически
+        if (!brief.emailOut) buildEmail();
+
+        // Плавная подсветка успешного автозаполнения
+        flashCardBorders();
+      } catch (e) {
+        console.error(e);
+        alert('Не удалось заполнить из транскрипта: ' + e.message);
+      } finally {
+        spin.classList.remove('on');
+      }
+    }
+
+    $('#btnFill').addEventListener('click', fillFromTranscript);
+
+    // Небольшая анимация-обратная связь
+    function flashCardBorders() {
+      for (const card of $$('.card')) {
+        card.style.boxShadow = '0 0 0 2px rgba(34,211,238,.35), 0 10px 30px rgba(0,0,0,.25)';
+        setTimeout(()=>{ card.style.boxShadow = '0 10px 30px rgba(0,0,0,.25)'; }, 600);
+      }
+    }
   </script>
 </body>
 </html>
